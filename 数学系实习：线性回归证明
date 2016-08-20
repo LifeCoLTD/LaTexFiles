@@ -1,0 +1,110 @@
+%-*- coding: UTF-8 -*-
+% gougu.tex
+%勾股定理
+\documentclass[UTF8]{ctexart}
+\newtheorem{thm}{证明}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\title{\heiti 实习作业：线性回归}
+\author{\kaishu 王浩同}
+\date{\today}
+\bibliographystyle{plain}
+\newcommand\degree{^\circ}
+\newenvironment{myquote}
+     {\begin{quote}\kaishu\zihao{-5}}
+     	{\end{quote}}
+\begin{document}
+	
+\maketitle
+\begin{thm}
+\end{thm}
+\[
+	\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}_1 -\hat{\beta}_2 \bar{x}_2 - \cdots \hat{\beta}_k \bar{x}_k
+\]
+证明：在多元回归模型中
+\[
+   y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots
+   + \beta_k x_{ik} + \varepsilon_i
+\]
+\[
+    \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \cdots + \hat{\beta}_k x_{ik}
+\]
+\[
+ F(x_{i1},\cdots,x_{ik};y) = \Sigma_{i=1}^{n} \varepsilon _{i}^2 = \Sigma_{i=1}^{n} (y_i - \hat{y}_i)^2 = 
+  \Sigma _{i=1}^n \left(y_i -  \hat{\beta}_0 - \hat{\beta}_1 x_{i1} - \hat{\beta}_2 x_{i2} - \cdots - \hat{\beta}_k x_{ik}\right)
+\]
+要使残差平方和最小，有：
+\[
+\frac{\partial F}{\partial \hat{\beta}_0}=2 \Sigma_{i=1}^n \left(y_i -  \hat{\beta}_0 - \hat{\beta}_1 x_{i1} - \hat{\beta}_2 x_{i2} - \cdots - \hat{\beta}_k x_{ik}
+        \right)=0
+\]
+对等号两边对每个点求和，可得
+\[
+n \hat{\beta}_0 = \Sigma _{i=1}^n y_i - \Sigma _{i=1}^n \hat{\beta}_1 x_{i1} -\Sigma _{i=1}^n \hat{\beta}_12 x_{i2}-
+\cdots -\Sigma _{i=1}^n \hat{\beta}_k x_{ik}
+ \]
+ 故
+ \[
+	\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}_1 -\hat{\beta}_2 \bar{x}_2 - \cdots \hat{\beta}_k \bar{x}_k
+ \]
+证毕
+\begin{thm}
+\end{thm}
+\[
+\Sigma (y_i-\bar{y})^2 = \Sigma(y_i-\hat{y})^2 + \Sigma (\hat{y}-\bar{y})^2
+\]
+引理1:
+\[
+\Sigma \,\varepsilon_i =0
+\]
+因为
+\[
+\frac{\partial F}{\partial \hat{\beta}_0}=2 \Sigma_{i=1}^n \left(y_i -  \hat{\beta}_0 - \hat{\beta}_1 x_{i1} - \hat{\beta}_2 x_{i2} - \cdots - \hat{\beta}_k x_{ik}
+\right)= \Sigma \,\varepsilon_i =0
+\]
+引理2：
+\[
+   \Sigma_{i=1}^n x_{ij} \varepsilon _i =0 \,\, (j=1 ,2 ,\cdots,k)
+\]
+因为
+\[
+\frac{\partial F}{\partial \hat{\beta}_1}=2 \Sigma_{i=1}^n (-x_{i1}) \left(y_i -  \hat{\beta}_0 - \hat{\beta}_1 x_{i1} - \hat{\beta}_2 x_{i2} - \cdots - \hat{\beta}_k x_{ik}
+\right)= \Sigma \, (-x_{i1}) \varepsilon_i =0
+\]
+\[
+\cdots
+\]
+\[
+\frac{\partial F}{\partial \hat{\beta}_k}=2 \Sigma_{i=1}^n (-x_{k1}) \left(y_i -  \hat{\beta}_0 - \hat{\beta}_1 x_{k1} - \hat{\beta}_2 x_{k2} - \cdots - \hat{\beta}_k x_{kk}
+\right)= \Sigma \, (-x_{k1}) \varepsilon_i =0
+\]
+\\
+证明：
+\[
+\Sigma (y_i-\bar{y})^2 =\Sigma [(y_i-\hat{y})+(\hat{y}-\bar{y})]^2 =\Sigma(y_i-\hat{y})^2+\Sigma(\hat{y}-\bar{y})^2+2 \Sigma(y_i-\hat{y})(\hat{y}-\bar{y})
+\]
+其中:
+\[
+\Sigma(y_i-\hat{y})(\hat{y}-\bar{y})=\Sigma\varepsilon(\hat{y}-\bar{y})=\Sigma\varepsilon \hat{y}-\Sigma\varepsilon\bar{y}
+\]
+\[
+\Sigma\varepsilon\bar{y}=\bar{y}\Sigma\varepsilon=0
+\]
+\[
+\Sigma\varepsilon \hat{y}=\Sigma\varepsilon ( \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \cdots + \hat{\beta}_k x_{ik})
+\]
+由引理2可得
+\[
+\Sigma\varepsilon \hat{y}=0
+\]
+因此
+\[
+2 \Sigma(y_i-\hat{y})(\hat{y}-\bar{y})=0
+\]
+故
+\[
+\Sigma (y_i-\bar{y})^2 = \Sigma(y_i-\hat{y})^2 + \Sigma (\hat{y}-\bar{y})^2
+\]
+证毕
+\end{document}
