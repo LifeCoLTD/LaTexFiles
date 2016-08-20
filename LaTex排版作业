@@ -1,0 +1,240 @@
+\documentclass{mcmthesis}
+\mcmsetup{CTeX = false, 
+        tcn = 0000, problem = C,
+        sheet = false, titleinsheet = true, keywordsinsheet = true,
+        titlepage = true, abstract = true}
+\usepackage{palatino}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\title{Designing the Optimal Snowboard Half-Pipe(
+	Excerpt)}
+\author{Group \# 11199}
+\date{\today}
+\begin{document}
+\begin{abstract}
+Attention:This article is a part of the papers published in MCM 2011 , and it is made by Haotong to practice \LaTeX ,  so don't see it as a valuble article.
+\begin{keywords}
+Half-Pipe; Math
+\end{keywords}
+\end{abstract}
+\maketitle
+\section{Introduction}
+\subsection{Introduction to Problem}
+Since its introduction in the Winter Olympic Games in1998, the popularity of half-pipe snowboarding competitions has surged. At the Turin 2006 Olympic Winter Games, snowboarding competitions posted the second-highest average viewer hours per hours per day of competition (Figure 1).It is widely believed that, when released, the comparable statistics for the Vancouver 2010 Olympic Winter Games will show even greater proportional viewership of snowboarding events. The objective of competitive half-pipe snowboarding is to perform well-executed, unique routines comprised of challenging aerial acrobatic manoeuvres that are executed as high in the air as possible. Similar to figure skating, half-pipe snowboard competitions are adjudicated events, whereby a panel of judges assign each competitor's performance a subjective score.For this reason, there is broad interest in designing snowboard courses that optimize one or both of these key performance variables. This paper seeks to design such courses, using both heuristic and mathematical arguments, which are suppoorted by simulations
+\begin{figure}[htp]
+     \centering
+     \includegraphics[scale=0.6]{picture1.png}
+     \caption{Average Viewer Hours per Day of Competition, Turin 2006 Olympic Winter}
+\end{figure}
+\subsection{Current Half-Pipe Engineering \& Dimensions}
+To understand half-pipe engineering dimensions, one must first familiarize themselves with the components of a half-pipe(Figure 2). The "deck" can only be used for very few tricks that are less concerned  with air time of rotation of the deck is less relevant for the objective of this paper, and we will incorporate the average dimensions of existing half-pipe decks in our structure.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{picture2.png}
+	\caption{Components of a Half-Pipe(Not to Scale)}
+\end{figure}
+
+\section{Analysis of the Problem}
+We know from Model 1.1 that the curve chosen does not alter the amount of vertical air that can be achieved. Due to the symmetry assumption, this is the same problem as solving for the first half of the curve. Without loss of generality, we set fixed points $A = P_{0} (0,0)$ and $ B = P_1(l,h)$ in the Euclidean plane (with the convention that downward moves in the $y$-axis are positive). The kinetic energy of the sliding body of mass $m$ at each instant must equal the potential energy lost from the initial height(by law of conservation of total energy). In order words, $E_K(P_n) = (1/2)mv^2 = mgy$, where $g$ is the acceleration due to gravity. We therefore see that $v = \sqrt{2gy}$. From multivariate calculus we also know that the arc length of the curve; $y = y(x)$, $x_0 \leqslant x \leqslant x_T$ is:
+\[ 
+arc\, \, length = \int_{x_0}^{x_T} \mathrm{d}s =\int_{x_0}^{x_T} \sqrt{1+[y']^2} \mathrm{d}x
+ \]
+ Thus in our problem, the total time, $T$, needed to move from $A = P_0(0,0)$ to position $B = P_1(l,h)$ is:
+ \[
+ T = \int \frac{distance \, \,  travelled}{speed} = \int \frac{\mathrm{d}s}{v} = \int_{0}^{l} \frac{\sqrt{1+[y']^2}}{\sqrt{2gy}} \mathrm{d}x
+ \]
+ Our objective is to find the curve $y = y(x)$ that minimizes$T$. Using the Euler-Lagrange equation we have:
+ \[
+ c_2 = c_1 \sqrt{2g} = \left (\frac{\sqrt{1+[y']^2}}{\sqrt{y}} \right) 
+- \left((y') \frac{ \partial }{\partial y'} 
+  \left(\frac{ \sqrt{1+[y']^2}}{\sqrt{y}} \right) \right) =
+  \left(\frac{1+[y']^2}{\sqrt{y}} \right) - \left(\frac{[y']^2}{\sqrt{y} \sqrt{1+[y']^2}} \right)
+\]
+where $c_1$ and $c_2$ are constants. Multiplying both sides by factor $\sqrt{y} \sqrt{1+[y']^2}$ and then squaring yields: $y(1+[y']^2) = (1/c_2)^2 = \gamma$. Solving for $y'$, we get: $y' = \mathrm{d}y / \mathrm{d}x = \sqrt{(\gamma - y)/y}$. Now we change variables such that: $\sqrt{y/(\gamma -y)} = tan(\varphi)$ Isolating for $y$, we get: $y = \gamma sin^2(\varphi)$.Use chain rule as follows:
+\[
+\frac{\mathrm{d}\varphi}{\mathrm{d}x} = \frac{\mathrm{d}\varphi}{\mathrm{d}y} \cdot 
+\frac{\mathrm{d}y}{\mathrm{d}x} =
+\frac{1}{2\gamma (sin(\varphi)) (cos(\varphi)) } \cdot 
+\frac{1}{(tan(\varphi))} = \frac{1}{2 \gamma (sin^2(\varphi))}
+\]
+
+\[
+  p_{j}=\begin{cases} 0,&\text{if $j$ is odd}\\
+  r!\,(-1)^{j/2},&\text{if $j$ is even}
+  \end{cases}
+\]
+
+This clearly shows that the exiting velocity is independent of mass.
+
+\[
+  \arcsin \theta  =
+  \mathop{{\int\!\!\!\!\!\int\!\!\!\!\!\int}\mkern-31.2mu
+  \bigodot}\limits_\varphi
+  {\mathop {\lim }\limits_{x \to \infty } \frac{{n!}}{{r!\left( {n - r}
+  \right)!}}} \eqno (1)
+\]
+
+
+
+\begin{thebibliography}{99}
+\bibitem{1} D.~E. KNUTH   The \TeX{}book  the American
+Mathematical Society and Addison-Wesley
+Publishing Company , 1984-1986.
+\bibitem{2}Lamport, Leslie,  \LaTeX{}: `` A Document Preparation System '',
+Addison-Wesley Publishing Company, 1986.
+\end{thebibliography}
+\appendix
+\section{The Tex code of this article}
+\begin{lstlisting}[numbers=left, numberstyle=\tiny,frame=shadowbox]
+\documentclass{mcmthesis}
+\mcmsetup{CTeX = false, 
+tcn = 0000, problem = C,
+sheet = false, titleinsheet = true, keywordsinsheet = true,
+titlepage = true, abstract = true}
+\usepackage{palatino}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\title{Designing the Optimal Snowboard Half-Pipe(
+Excerpt)}
+\author{Group \# 11199}
+\date{\today}
+\begin{document}
+\begin{abstract}
+Attention:This article is a part of the papers published in MCM 2011 ,
+and it is made by Haotong to practice \LaTeX ,  so don't see it as a valuble
+article.
+\begin{keywords}
+Half-Pipe; Math
+\end{keywords}
+\end{abstract}
+\maketitle
+\section{Introduction}
+\subsection{Introduction to Problem}
+Since its introduction in the Winter Olympic Games in1998, the popularity 
+of half-pipe snowboarding competitions has surged. At the Turin 2006 Olympic
+Winter Games, snowboarding competitions posted the second-highest average
+viewer hours per hours per day of competition (Figure 1).It is widely believed
+that, when released, the comparable statistics for the Vancouver 2010 
+Olympic Winter Games will show even greater proportional viewership of 
+snowboarding events. The objective of competitive half-pipe snowboarding
+is to perform well-executed, unique routines comprised of challenging 
+aerial acrobatic manoeuvres that are executed as high in the air as possible.
+Similar to figure skating, half-pipe snowboard competitions are adjudicated 
+events, whereby a panel of judges assign each competitor's performance a 
+subjective score.For this reason, there is broad interest in designing 
+snowboard courses that optimize one or both of these key performance variables. 
+This paper seeks to design such courses, using both heuristic and mathematical
+arguments, which are suppoorted by simulations
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.6]{picture1.png}
+\caption{Average Viewer Hours per Day of Competition, Turin 2006 Olympic Winter}
+\end{figure}
+\subsection{Current Half-Pipe Engineering \& Dimensions}
+To understand half-pipe engineering dimensions, one must first familiarize 
+themselves with the components of a half-pipe(Figure 2). The "deck" can only 
+be used for very few tricks that are less concerned  with air time of rotation 
+of the deck is less relevant for the objective of this paper, and we will 
+incorporate the average dimensions of existing half-pipe decks in our structure.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{picture2.png}
+\caption{Components of a Half-Pipe(Not to Scale)}
+\end{figure}
+
+\section{Analysis of the Problem}
+We know from Model 1.1 that the curve chosen does not alter the amount of 
+vertical air that can be achieved. Due to the symmetry assumption, 
+this is the same problem as solving for the first half of the curve. Without 
+loss of generality, we set fixed points $A = P_{0} (0,0)$ and $ B = P_1(l,h)$ 
+in the Euclidean plane (with the convention that downward moves in the 
+$y$-axis are positive). The kinetic energy of the sliding body of mass $m$ 
+at each instant must equal the potential energy lost from the initial height(by 
+law of conservation of total energy). In order words, $E_K(P_n) = (1/2)mv^2
+ = mgy$, where $g$ is the acceleration due to gravity. We therefore see 
+ that $v = \sqrt{2gy}$. From multivariate calculus we also know that the 
+ arc length of the curve; $y = y(x)$, $x_0 \leqslant x \leqslant x_T$ is:
+\[ 
+arc\, \, length = \int_{x_0}^{x_T} \mathrm{d}s =\int_{x_0}^{x_T} 
+\sqrt{1+[y']^2} \mathrm{d}x
+\]
+Thus in our problem, the total time, $T$, needed to move from $A = P_0(0,0)$ to 
+position $B = P_1(l,h)$ is:
+\[
+T = \int \frac{distance 
+\, \,  travelled}
+{speed} = \int \frac{\mathrm{d}s}{v} = \int_{0}^{l} \frac{\sqrt{1+[y']^2}}
+{\sqrt{2gy}} \mathrm{d}x
+\]
+Our objective is to
+ find the curve $y
+  = y(x)$ that 
+  minimizes$T$. Using
+   the Euler-Lagrange equation we have:
+\[
+c_2 = c_1 \sqrt{2g}
+ = \left (\frac{\sqrt{1+[y']^2}}{\sqrt{y}} \right) 
+- \left((y') \frac{ \partial }{\partial y'} 
+\left(\frac{ \sqrt{1+[y']^2}}{\sqrt{y}} \right) \right) =
+\left(\frac{1+[y']^2}
+{\sqrt{y}} \right) - 
+\left(\frac{[y']^2}
+{\sqrt{y} \sqrt{1+[y']^2}} \right)
+\]
+where $c_1$ and $c_2$ are constants. Multiplying both sides by factor 
+$\sqrt{y} \sqrt{1+[y']^2}$ and then squaring yields: $y(1+[y']^2) = (1/c_2)^2 
+= \gamma$. Solving for $y'$, we get: $y' = \mathrm{d}y / \mathrm{d}x = 
+\sqrt{(\gamma - y)/y}$. Now we change variables such that: $\sqrt{y/(\gamma -y)} 
+= tan(\varphi)$ Isolating for $y$, we get: $y = \gamma sin^2(\varphi)$.Use 
+chain rule as follows:
+\[
+\frac{\mathrm{d}\varphi}{\mathrm{d}x} = \frac{\mathrm{d}\varphi}{\mathrm{d}y} 
+\cdot 
+\frac{\mathrm{d}y}{\mathrm{d}x} =
+\frac{1}{2\gamma (sin(\varphi)) (cos(\varphi)) } \cdot 
+\frac{1}{(tan(\varphi))} = \frac{1}{2 \gamma (sin^2(\varphi))}
+\]
+
+\[
+p_{j}=\begin{cases} 0,&\text{if $j$ is odd}\\
+r!\,(-1)^{j/2},&\text{if $j$ is even}
+\end{cases}
+\]
+
+This clearly shows that the exiting velocity is independent of mass.
+
+\[
+\arcsin \theta  =
+\mathop{{\int\!\!\!\!\!\int\!\!\!\!\!\int}\mkern-31.2mu
+\bigodot}\limits_\varphi
+{\mathop {\lim }\limits_{x \to \infty } \frac{{n!}}{{r!\left( {n - r}
+\right)!}}} \eqno (1)
+\]
+
+
+
+\begin{thebibliography}{99}
+\bibitem{1} D.~E. KNUTH   The \TeX{}book  the American
+Mathematical Society and Addison-Wesley
+Publishing Company , 1984-1986.
+\bibitem{2}Lamport, Leslie,  \LaTeX{}: `` A Document Preparation System '',
+Addison-Wesley Publishing Company, 1986.
+\end{thebibliography}
+\appendix
+\section{The Tex code of this article}
+\begin{lstlisting}[numbers=left, numberstyle=\tiny,frame=shadowbox]
+
+\end{lstlisting}
+
+\end{document}
+\end{lstlisting}
+
+\end{document}
