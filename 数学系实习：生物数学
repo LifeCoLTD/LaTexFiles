@@ -1,0 +1,246 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{times}
+\usepackage[mtbold,mtpluscal,mtplusscr]{mathtime}
+\newtheorem{thm}{引理}
+\title{\heiti 基于经典4阶Runge-kutta方法研究捕食与被捕食系统}
+\author{\kaishu 王浩同}
+\date{\today}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\newpage
+	\setlength{\parindent}{2em}
+	\section{经典4阶Runge-kutta方法}
+	\noindent
+	在区间$[t_k,t_{k+1}]$上对微分方程积分：
+	\[
+	\int_{t_k}^{t_{k+1}} f(t,x(t),y(t)) \mathrm{d}t =
+	\int_{t_k}^{t_{t+1}} x'(t) \mathrm{d}t = x(t_{k+1})-x(t_k)
+	\]
+	再利用trapezoidal rule可以得到：
+	\[
+	x_{k+1} = x_k + \frac{h}{2}((f(t_k,x_k,y_k))+f(t_{k+1},x_{k+1},y_{k+1}))
+	\]
+	但右边含有 $x_{k+1} $ $y_{k+1}$，利用Euler Method 得到Heun Method：
+	\[
+	x_{k+1} =x_k +\frac{h}{2}(f(t_k,x_k,y_k)+f(t_{k+1},x_k+hf(t_k,x_k,y_k),y_k+hg(t_k,x_k,y_k))
+	\]
+	在每一步中，用Euler Method作为预报，trapezoidal rule进行校正，得到最终值。\\
+	Runge-Kutta Method of Order 4\\
+	基于Heum Method的推导过程，我们得到
+\begin{equation}
+\begin{cases}
+t_{k+1} = t_k +h,  \\
+x_{k+1} =x_{k} +h \cdot f(t_k,x_k,y_k), k =1,2,\cdots ,M \\
+y_{k+1}=y_k +h \cdot g(t_k,x_k,y_k)
+\nonumber
+\end{cases}
+\end{equation}
+提高精度，得到4价Runge-Kutta Method:
+\begin{equation}
+\begin{cases}
+x_{k+1}=x_k+ \frac{h}{6} \cdot (f_1+2f_2+2f_3+f_4)   \\
+y_{k+1} = y_k +\frac{h}{6} \cdot (g_1+2g_2+2g_3+g_4) \nonumber
+\end{cases}
+\end{equation}
+	其中：
+	\begin{equation}
+	\begin{cases}
+	f_1=f(t_k,x_k,y_k) \\
+	f_2=f(t_k+\frac{h}{2},x_k+\frac{h}{2}\cdot f_1,y_k+\frac{h}{2} \cdot g_1) \\
+		f_3=f(t_k+\frac{h}{2},x_k+\frac{h}{2}\cdot f_2,y_k+\frac{h}{2} \cdot g_2) \\
+			f_4=f(t_k+\frac{h}{2},x_k+\frac{h}{2}\cdot f_3,y_k+\frac{h}{2} \cdot g_3)\\
+     g_1 = g(t_k,x_k,y_k)\\
+     g_2=f(t_k+\frac{h}{2},x_k+\frac{h}{2}\cdot f_1,y_k+\frac{h}{2} \cdot g_1) \\
+     g_3=f(t_k+\frac{h}{2},x_k+\frac{h}{2}\cdot f_2,y_k+\frac{h}{2} \cdot g_2) \\
+     g_3=f(t_k+\frac{h}{2},x_k+\frac{h}{2}\cdot f_3,y_k+\frac{h}{2} \cdot g_3) \\
+     g_4=g(t_k+h,x_k+h \cdot f_3,y_k+h\cdot g_3)
+     \nonumber
+	\end{cases}
+	\end{equation}
+
+	\section{模型参数设定}
+	\noindent
+	对于捕食与被捕食系统
+	\begin{equation}
+	\begin{cases}
+	\dot{x}=a-dx-\lambda xy \\
+	\dot{y}=\lambda xy-(d+ \gamma)y
+	\nonumber
+	\end{cases}
+	\end{equation}
+	取$a=1 ,d=0.5,\lambda =0.1 ,\gamma = 0.02$
+	\section{程序运行结果}
+\begin{figure}[H] \centering    
+	\subfigure[被捕食者与捕食者随时间变化图] { \label{fig:a}     
+		\includegraphics[width=0.6\columnwidth]{picture1.jpg}  
+	}     
+	\subfigure[被捕食者和捕食者相图] { \label{fig:b}     
+		\includegraphics[width=0.6\columnwidth]{picture2.jpg} \label{fig}    } 
+\end{figure}
+从图中可以看出，捕食者与被捕食者共同生存，一段时间后，二者种群数量不再作显著的周期变化，而是趋向于一个稳定的值。
+     \section{平衡点稳定性分析}
+	\begin{thm}
+		 \begin{equation}
+		 \text{设有驻定方程组}
+		 \begin{cases}
+		 \frac{\mathrm{d}x}{\mathrm{d}t}=X(x,y)\\
+		 \frac{\mathrm{d}y}{\mathrm{d}t} = Y(x,y) \nonumber
+		 
+		 \end{cases}
+		 \text{称同时满足}X(x,y)=0,
+		 Y(x,y)=0 \text{的点}
+		 \end{equation}
+		 $(x^{*},y^{*})$
+		为方程组的奇点 \\
+		对于$n$阶非线性微分方程组
+	
+		
+
+		$$\frac{\mathrm{d}x}{\mathrm{d}t}= Ax+R(x) \eqno{(1)}
+		$$
+
+		其中$R(0)=0$。显然$x=0$是方程组 的解。 \\
+		若方程组满足条件$ \left\| \frac{R(x)}{x} \right\|\to 0 $
+		\,
+		(当$\left\| x \right\| \to 0$时)，则称线性方程
+		\[
+		\frac{\mathrm{d}x}{\mathrm{d}t}=Ax   \eqno{(2)}
+		\]为方程组的线性近似方程组。\\
+		线性近似方程组的系数矩阵$A$的特征方程为
+		\[
+		det(A-\lambda E)=0 \eqno{(3)}
+		\]
+		\end{thm}
+		\begin{thm}
+			若特征方程(3)没有零根或零实部的根，则非线性方程组的零解稳定性与其线性近似方程组的零解的稳定性是一致的。\\
+			若特征方程的根均具有负实部，则方程组的零解是渐稳近稳定的;
+			\\若特征方程的根具有正实部的根，方程组的零解是不稳定的。
+			
+		\end{thm}
+		对于捕食与被捕食系统
+		\begin{equation}
+		\begin{cases}
+		\dot{x}=a-dx-\lambda xy \\
+		\dot{y}=\lambda xy-(d+ \gamma)y
+		\nonumber
+		\end{cases}
+		\end{equation}
+		代入参数，解方程组
+		\begin{equation}
+		\begin{cases}
+		a-dx-\lambda xy=0 \\
+		\lambda xy-(d+ \gamma)y=0
+        \nonumber
+		\end{cases}
+		\end{equation}
+		得
+		\begin{equation}
+		\left\{{
+		\begin{array}{l}
+		{x_1=2} \\ {y_1=0}
+		\end{array}}
+	    \right.,
+	    \left\{{
+	    \begin{array}{l}
+	    {x_2=\frac{26}{5}}\\{y_2=- \frac{40}{13}}
+	    \end{array}}
+	    \right. \nonumber
+		\end{equation}
+		方程组的所有奇点为$(2,0),(\frac{26}{5},-\frac{40}{13})$\\
+		现讨论驻定解$(2,0)$的稳定形态\\
+		\begin{equation}
+		\text{令}
+		\begin{cases}
+	    X=x-2 \\ Y=y
+	    \nonumber
+		\end{cases}
+		\end{equation}
+		将原方程组化为
+		\begin{equation}
+		\begin{cases}
+		\frac{\mathrm{d}X}{\mathrm{d}t}=a-2d-dX-2\lambda Y-\lambda XY
+		\\
+		\frac{\mathrm{d}Y}{\mathrm{d}t}=2\lambda Y -(d+ \gamma )Y+ \lambda XY
+		\nonumber
+		\end{cases}
+		\end{equation}
+		一次近似方程为
+	\begin{equation}
+	\begin{cases}
+	\frac{\mathrm{d}X}{\mathrm{d}t}=dX-2\lambda Y
+	\\
+	\frac{\mathrm{d}Y}{\mathrm{d}t}=(2\lambda  -d-\gamma )Y
+	\nonumber
+	\end{cases}
+	\end{equation}
+	有负实部的特征根$\lambda_1=-0.5 ,\lambda_2=-0.32$，由引理2可知方程组的解是渐稳近稳定的。\\
+	接下来讨论驻定解$(\frac{26}{5},-\frac{40}{13})$的稳定形态
+	\\同理可得
+	有特征根$\lambda_1=0.4175 ,\lambda_2=-1.1498$，故方程组的零解是不稳定的
+\lstset{language=Matlab,numbers=left,frame=shadowbox,  
+	, breaklines=true,escapechar=@}
+\section{Matlab代码}
+\begin{lstlisting}
+function R=rk4(f,g,a,b,xa,ya,M)  
+%Input    - f is the function entered as a string 'f'  
+%         - g is the function entered as a string 'g'  
+%             - a and b are the left and right endpoints  
+%             - xa is the initial condition x(a)  
+%             - ya is the initial condition y(a)  
+%             - M is the number of steps  
+%Output -R=[T' X' Y'] where T is the vector of abscissas  
+%              and X and Y are the vectors of ordinates  
+h=(b-a)/M;  
+T=zeros(1,M+1);  
+X=zeros(1,M+1);  
+Y=zeros(1,M+1);  
+T=a:h:b;  
+X(1)=xa;  
+Y(1)=ya;  
+for j=1:M  
+k1=h*feval(f,T(j),X(j),Y(j));  
+k2=h*feval(g,T(j),X(j),Y(j));  
+k3=h*feval(f,T(j)+h/2,X(j)+k1/2,Y(j)+k2/2);  
+k4=h*feval(g,T(j)+h/2,X(j)+k1/2,Y(j)+k2/2);  
+k5=h*feval(f,T(j)+h/2,X(j)+k3/2,Y(j)+k4/2);  
+k6=h*feval(g,T(j)+h/2,X(j)+k3/2,Y(j)+k4/2);   
+k7=h*feval(f,T(j)+h,X(j)+k5,Y(j)+k6);  
+k8=h*feval(g,T(j)+h,X(j)+k5,Y(j)+k6);  
+X(j+1)=X(j)+(k1+2*k3+2*k5+k7)/6;  
+Y(j+1)=Y(j)+(k2+2*k4+2*k6+k8)/6;  
+end  
+R=[T' X' Y'];  
+
+%@希腊字母伽马替换为c,拉姆达替换为b@
+function f=fun1(t,x,y)
+a=1; d=0.5 ; b=0.1; c=0.02;
+f=a-d*x-b*x*y
+function g=fun2(t,x,y)
+a=1; d=0.5 ; b=0.1; c=0.02;
+g= d*x*y-(d+c)*y
+
+a=0;
+b=50;
+xa=2;
+ya=25;
+M=50;
+f='fun1' ;g='fun2' ;
+R=rk4(f,g,a,b,xa,ya,M);
+plot(R(:,1),R(:,2),'r',R(:,1),R(:,3),'b');
+%xlabel('@时间@ t');ylabel('@种群规模@');legend('@捕食者@','@被捕食者@');
+plot(R(:,2),R(:,3),'-');
+xlabel('@捕食者@');ylabel('@被捕食者@');
+\end{lstlisting}
+
+
+\end{document}
