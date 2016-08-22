@@ -9,3 +9,10 @@ Latex 换行顶格、不缩进，使用的命令为：
 
 \end{cases}
 \end{equation}
+
+使用New Time Roma 字体
+\usepackage{times}
+\usepackage[mtbold,mtpluscal,mtplusscr]{mathtime}
+若没有mathtime字库，可以使用如下：
+\usepackage{times}
+\usepackage{mathptmx}
