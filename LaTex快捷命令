@@ -1,0 +1,11 @@
+取消缩进
+Latex 换行顶格、不缩进，使用的命令为：
+\noindent
+在顶格的段落前面加上，此命令，就可以啦~~~
+
+只有左边有大括号： amsmath宏包
+\begin{equation}
+\begin{cases}
+
+\end{cases}
+\end{equation}
