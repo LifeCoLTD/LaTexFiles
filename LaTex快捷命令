@@ -7,12 +7,26 @@ Latex 换行顶格、不缩进，使用的命令为：
 \begin{equation}
 \begin{cases}
 
+\nonumber
 \end{cases}
 \end{equation}
-
 使用New Time Roma 字体
 \usepackage{times}
 \usepackage[mtbold,mtpluscal,mtplusscr]{mathtime}
 若没有mathtime字库，可以使用如下：
 \usepackage{times}
 \usepackage{mathptmx}
+
+一行内打两个左边的大括号
+\begin{equation}
+		\left\{{
+		\begin{array}{l}
+		{x_1=2} \\ {y_1=0}
+		\end{array}}
+	    \right.,
+	    \left\{{
+	    \begin{array}{l}
+	    {x_2=\frac{26}{5}}\\{y_2=- \frac{40}{13}}
+	    \end{array}}
+	    \right. \nonumber
+		\end{equation}
