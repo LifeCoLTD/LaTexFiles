@@ -1,0 +1,44 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{subfigure}
+\title{\heiti 题目}
+\author{\kaishu 作者}
+\date{\today}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\newpage
+	\setlength{\parindent}{2em}
+	\section{经典4阶Runge-kutta方法}
+	
+	
+	\section{模型参数设定}
+	
+	\section{程序运行结果}
+	\begin{figure}[H]
+		\centering
+		\subfigure{
+			\begin{minipage}[b]{1\textwidth}
+				\includegraphics[width=1\textwidth]{picture1.jpg} \\
+				\includegraphics[width=1\textwidth]{picture2.jpg}
+			\end{minipage}
+		}
+	\end{figure}
+     \section{平衡点稳定性分析}
+	
+\lstset{language=Matlab,numbers=left,frame=shadowbox,  
+	, breaklines=true,escapechar=@}
+\section{Matlab代码}
+\begin{lstlisting}
+
+\end{lstlisting}
+
+
+\end{document}
