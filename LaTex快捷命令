@@ -30,3 +30,15 @@ Latex 换行顶格、不缩进，使用的命令为：
 	    \end{array}}
 	    \right. \nonumber
 		\end{equation}
+
+一行插入两张图片 宏包\usepackage{graphicx}  \usepackage{subfigure}
+\begin{figure}
+\centering
+\subfigure[vm] 
+{\includegraphics[width=4cm]{vm}}
+\subfigure[1] 
+{\includegraphics[width=4cm]{docker}}
+\caption{Comparison of (a) hypervisor and (b) container-based deployments.}
+\label{guiFig}
+\end{figure}
+若是双栏，则将figure后面加*
