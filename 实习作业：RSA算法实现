@@ -1,0 +1,87 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage[a4paper,left=3cm,right=3cm]{geometry}
+\title{\heiti 实习作业：RSA算法实现}
+\author{\kaishu 王浩同}
+\date{\today}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\newpage
+	\setlength{\parindent}{2em}
+	\section{参数选取以及运行结果}
+     选取$p=9973,q=9967,e=9929$，得到公钥$(n,e)=(99400891,9929)$以及私钥$(n,d)=(99400891,96007865)$ \par
+     姓名$wanghaotong$对应的明文信息为\,$\underline{2201}$\,$\underline{3670}$\,$\underline{1419}$\,$\underline{1413}$\,$\underline{6000}$(每四个数字为一组) \par
+     加密后的密文为\,$\underline{83591545}$\,$\underline{3634369}$\,$\underline{8133690}$\,$\underline{73981507}$\,$\underline{67754900}$ \par
+     经过RSA算法解密后的明文与原明文一致(代码中体现)
+\lstset{language=C++,numbers=left,frame=shadowbox,  
+	, breaklines=true,escapechar=@}
+\section{C++代码}
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+long long f;
+void exgcd(long long a,long long b,long long &x,long long &y)
+{                                                                                //@扩展欧几里得算法@
+if(b==0)
+{
+x=1;
+y=0;
+f=a;    //@f为求出来的a,b的最小公约数@
+}
+else
+{
+exgcd(b,a%b,x,y);
+long long t=x;
+x = y;
+y = t - (a /b )* y;
+}
+
+}
+int findd(long long a,long long b)
+{
+long long x,y;
+exgcd(a,b,x,y);
+x=x/f;
+long long r=b/f;
+x=(x%r+r)%r;     //@求解的最小值@
+return x;
+}
+int main()
+{
+long long p,q,e,n,n1,d;
+long long ming,a=1,b=1;
+cout<<"@请任选两个四位的素数和一个三位或者四位的素数@"<<endl;
+cin>>p>>q>>e;
+n=p*q;
+n1=(p-1)*(q-1);
+d=findd(e,n1);
+cout<<"@公钥@(n,e)@为@"<<"("<<n <<","<<e<<")"<<endl;
+cout<<"@私钥@(n,d)@为@"<<"("<<n <<","<<d<<")"<<endl;
+cout<<"@请输入要加密的内容@"<<endl;
+cin>>ming;
+for(int i=1;i<=e;i++)
+{
+a=a*ming%n;
+}
+cout<<"@密文是@"<<a<<endl;
+for(int j=1;j<=d;j++)
+{
+b=b*a%n;
+}
+cout<<"@解出的明文是@"<<b<<endl;
+return 0;
+}
+
+
+\end{lstlisting}
+
+
+\end{document}
