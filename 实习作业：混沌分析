@@ -1,0 +1,234 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{times}
+\usepackage[mtbold,mtpluscal,mtplusscr]{mathtime}
+\newtheorem{thm}{引理}
+\usepackage[a4paper,left=3cm,right=3cm]{geometry}
+\title{\heiti 基于Matlab的混沌系统仿真与分析}
+\author{\kaishu 王浩同}
+\date{\today}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\newpage
+	\setlength{\parindent}{2em}
+    \section{问题重述}
+	\noindent
+	化学动力学过程：
+	
+	\begin{equation}
+	\begin{cases}
+	\dot{x}=x(a_1-k_1x-z-y)+k_2y+a_3 \\
+	\dot{y}=y(x-k_2-a_5)+a_3\\
+	\dot{z}=z(a_4-x-k_5z)+a_3
+	\nonumber
+	\end{cases}
+	\end{equation}
+	当$k_1=0.25,k_2=10^{-8},k_3=0.5,a_1=30,a_2=a_3=10^{-8},a_4=16.5,a_5=10$时出现混沌。分析其非线性动力学行为。
+
+     \section{平衡点稳定性分析}
+	\begin{thm}
+		 \begin{equation}
+		 \text{设有驻定方程组}
+		 \begin{cases}
+		 \frac{\mathrm{d}x}{\mathrm{d}t}=X(x,y)\\
+		 \frac{\mathrm{d}y}{\mathrm{d}t} = Y(x,y) \nonumber
+		 
+		 \end{cases}
+		 \text{称同时满足}X(x,y)=0,
+		 Y(x,y)=0 \text{的点}
+		 \end{equation}
+		 $(x^{*},y^{*})$
+		为方程组的奇点 \\
+		对于$n$阶非线性微分方程组
+	
+		
+
+		$$\frac{\mathrm{d}x}{\mathrm{d}t}= Ax+R(x) \eqno{(1)}
+		$$
+
+		其中$R(0)=0$。显然$x=0$是方程组 的解。 \\
+		若方程组满足条件$ \left\| \frac{R(x)}{x} \right\|\to 0 $
+		\,
+		(当$\left\| x \right\| \to 0$时)，则称线性方程
+		\[
+		\frac{\mathrm{d}x}{\mathrm{d}t}=Ax   \eqno{(2)}
+		\]为方程组的线性近似方程组。\\
+		线性近似方程组的系数矩阵$A$的特征方程为
+		\[
+		det(A-\lambda E)=0 \eqno{(3)}
+		\]
+		\end{thm}
+		\begin{thm}
+			若特征方程(3)没有零根或零实部的根，则非线性方程组的零解稳定性与其线性近似方程组的零解的稳定性是一致的。\\
+			若特征方程的根均具有负实部，则方程组的零解是渐稳近稳定的;
+			\\若特征方程的根具有正实部的根，方程组的零解是不稳定的。
+			
+		\end{thm}
+		对于此化学动力学过程
+		\begin{equation}
+		\begin{cases}
+		\dot{x}=x(a_1-k_1x-z-y)+k_2y+a_3 \\
+		\dot{y}=y(x-k_2-a_5)+a_3\\
+		\dot{z}=z(a_4-x-k_5z)+a_3
+		\nonumber
+		\end{cases}
+		\end{equation}
+		代入参数，解方程组
+		\begin{equation}
+		\begin{cases}
+		x(a_1-k_1x-z-y)+k_2y+a_3=0 \\
+		y(x-k_2-a_5)+a_3=0\\
+		z(a_4-x-k_5z)+a_3=0
+		\nonumber
+		\end{cases}
+		\end{equation}
+		得
+		\begin{equation}
+		\left\{{
+		\begin{array}{l}
+		{x=10} \\ {y=0}
+		\\{z=13}
+		\end{array}}
+	    \right.,
+	    \nonumber
+		\end{equation}
+		方程组的一个奇点为$(10,0,13)$\\
+		现讨论驻定解$(10,0,13)$的稳定形态\\
+		\begin{equation}
+		\text{令}
+		\begin{cases}
+	    X=x-10 \\ Y=y\\Z=z-13
+	    \nonumber
+		\end{cases}
+		\end{equation}
+		将原方程组化为
+		\begin{equation}
+		\begin{cases}
+		\frac{\mathrm{d}X}{\mathrm{d}t}=-0.25X^2-XY-XZ+48X+10Y+10Z-455
+		\\
+		\frac{\mathrm{d}Y}{\mathrm{d}t}= XY -Y^2\times10^{-8}-20Y+10^{-8}\\
+			\frac{\mathrm{d}Z}{\mathrm{d}t}= -XZ+13X-0.5Z^2+39.5Z-429
+		\nonumber
+		\end{cases}
+		\end{equation}
+		一次近似方程为
+	\begin{equation}
+	\begin{cases}
+	\frac{\mathrm{d}X}{\mathrm{d}t}=48x+10y+10z
+	\\
+	\frac{\mathrm{d}Y}{\mathrm{d}t}=-20Y \\
+		\frac{\mathrm{d}Z}{\mathrm{d}t}=13X+39.5Z
+	\nonumber
+	\end{cases}
+	\end{equation}
+	有负实部的特征根$\lambda_1=55.8213 ,\lambda_2=31.3787,\lambda_3=-20$，由引理2可知方程组的解是不稳定的。\\
+    其余奇点也可按此方法去讨论稳定性。
+		\section{混沌图，时域波形图，分叉图}
+\begin{figure}[H]
+	\centering
+	\subfigure[xyz三维空间相图] 
+	{\includegraphics[width=4cm]{picture1.jpg}}
+	\subfigure[xy平面相图] 
+	{\includegraphics[width=4cm]{picture2.jpg}}
+	\label{guiFig}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\subfigure[xz平面相图] 
+	{\includegraphics[width=4cm]{picture3.jpg}}
+	\subfigure[yz平面相图] 
+	{\includegraphics[width=4cm]{picture4.jpg}}
+
+	\label{guiFig}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Lorenz映射分岔图] 
+	{\includegraphics[width=4cm]{picture5.jpg}}
+	\subfigure[ 时域波形图] 
+	{\includegraphics[width=4cm]{picture6.png}}
+	\label{guiFig}
+\end{figure}
+\lstset{language=Matlab,numbers=left,frame=shadowbox,  
+	, breaklines=true,escapechar=@}
+\section{Matlab代码}
+\begin{lstlisting}
+function f=chao_SimpleLorenz(t,y)
+
+global c
+
+f=zeros(3,1);
+f(1)=y(1)*(30-0.25*y(1)-y(3)-y(2))+0.00000001*y(2)+0.00000001;
+f(2)=y(2)*(y(1)-0.00000001*y(2)-10)+0.00000001;
+f(3)=y(3)*(16.5-y(1)-0.5*y(3))+0.00000001
+clc
+
+clear
+
+global c
+
+c=2;
+
+[T,Y]=ode45(chao_SimpleLorenz,0:0.01:500,[1 2 3 ]);
+
+figure
+
+plot(Y(30000:end,2),Y(30000:end,3))
+
+xlim([0 30])
+
+%xlabel('\itx')
+
+%ylabel('\itz')
+%plot3(Y(30000:end,1),Y(30000:end,2),Y(30000:end,3))
+
+%zlabel('\itz')
+function dy = Lorenz(t,y)
+
+dy=zeros(6,1);
+dy(1)=y(1)*(30-0.25*y(1)-y(3)-y(2))+0.00000001*y(2)+0.00000001
+dy(2)=y(2)*(y(1)-0.00000001*y(2)-10)+0.00000001
+dy(3)=y(3)*(16.5-y(1)-0.5*y(3))+0.00000001
+dy(4)=0;
+dy(5)=0;
+dy(6)=0;
+function Lorenz_bifur_r
+Z=[]; 
+for r=linspace(1,500,1000); 
+% @舍弃前面迭带的结果，用后面的结果画图@ 
+[T,Y]=ode45('Lorenz',[0,1],[1;1;1;16;r;4]);  
+[T,Y]=ode45('Lorenz',[0,50],Y(length(Y),:)); 
+Y(:,1)=Y(:,2)-Y(:,1); 
+% @对计算结果进行判断，如果点满足x=y，则取点@
+for k=2:length(Y) 
+f=k-1; 
+if Y(k,1)<0   
+if Y(f,1)>0
+y=Y(k,2)-Y(k,1)*(Y(f,2)-Y(k,2))/(Y(f,1)-Y(k,1));
+Z=[Z r+abs(y)*i];
+end  
+else     
+if Y(f,1)<0  
+y=Y(k,2)-Y(k,1)*(Y(f,2)-Y(k,2))/(Y(f,1)-Y(k,1));   
+Z=[Z r+abs(y)*i];   
+end  
+end 
+end
+end
+plot(Z,'.','markersize',1)
+xlabel('r'),ylabel('|y| where x=y')
+\end{lstlisting}
+
+
+\end{document}
