@@ -8,6 +8,11 @@
 \usepackage{float}
 \usepackage{subfigure}
 \usepackage{times}
+%\usepackage[colorlinks,
+%linkcolor=black,
+%anchorcolor=black,
+%citecolor=black
+%]{hyperref}
 \usepackage[mtbold,mtpluscal,mtplusscr]{mathtime}
 \usepackage[a4paper,left=3cm,right=3cm]{geometry}
 \newtheorem{thm1}{引理}
@@ -192,6 +197,165 @@
  	\indent
  	经过一代代数学家们的努力，几何学成为数学百花园中一颗璀璨的明珠，越发绽放出夺目的光彩。通过实习过程中老师的讲解以及可课下对于几何的了解，我觉得几何学具有较强的直观效果，与现实生活有较强的联系（欧式几何），利于人们对于几何学感性上的认识，并在几何学中找到实际生活中的参考。并且，几何学可以更好地培养人的逻辑思维能力（拓扑学就有高度的抽象性）和空间想象能力（在实际中往往需要把低维空间中本质规律科学地、合乎逻辑地推广到高维空间中去），最后，几何学具有深刻的美学内涵（分形等等），它是数学美的一部分，具有广泛的应用。研究几何学可把人带入更高的境界。在欣赏几何学内在美的同时，由于几何学与其他数学分支的交融又可以欣赏到其他数学分支的内在美。
  	\newpage
+ 	\section{模糊控制及其应用}
+ 	\subsection{模糊控制概述}
+ 	
+ 	\subsection{MATLAB在模糊控制系统仿真中的应用}
+ 	\subsubsection{模糊逻辑工具箱介绍}
+ 	Matlab自带的FUZZY \, LOGIC \,TOOLBOX 提供了两种来建立模糊逻辑控制系统，即命令行方式和用户图形界面方式。而用户图形界面更为友好，下文将介绍图形用户界面。 \par
+ 	模糊逻辑工具箱提供了五个基本的交互式图形界面来设计和完成模糊逻辑控制系统，它们分别为：\\
+ 	(1)模糊推理系统编辑器 \par
+ 	该编辑器用于设计和显示模糊推理膝盖痛的一些基本信息与参数，如：推理系统的名称，输入、输出变量的个数和名称，模糊推理系统的类型，解模糊方法等。其中，模糊推理系统可以采用Mamdani或Sugeno两种类型，解模糊方法有最大隶属度法、中位数法、加权平均法等几种。\\
+ 	(2)隶属函数编辑器 \par
+ 	改函数编辑器提供了一个友好的人机图形交互环境，用来设计、修改模糊推理系统中各语言变量对应的隶属函数的相关参数，如隶属函数的形状、范围，以及论域大小等。系统提供的隶属函数有三角形、梯形、高斯形、钟形等等，而且用户还可以自定义。\\
+ 	(3)规则编辑器\par
+ 	通过该编辑器来设计和修改“IF$\cdots$ Then”形式的模糊控制规则(专家经验)。由该编辑器进行模糊控制规则的制定非常方便，它将输入量的各语言变量自动匹配，而设计者只需通过交互式的图形环境选择相应的输出语言变量，这就大大简化了规则的设计和修改。\\
+ 	(4)规则查看器 \par
+ 	规则查看器用于显示各条模糊控制规则 对应的输入量和输出量的隶属函数。通过指定输入量，可以直观地显示所采用的控制规则，以及通过模糊推理得到相应输出量的过程，以便对模糊规则进行修改和优化。\\
+ 	(5)表面查看器 \par	
+ 	该查看器用于显示输入、输出量对应的表面空间，并可改变各轴对应的变量及观察的视角，便于用户对设计的模糊推理系统进行修改和优化。\par
+ 	在命令行输入$fuzzy$，可直接创建一个新的模糊推理系统编辑器。
+ 	\subsection{简单仿真程序运行结果}
+ 	\begin{figure}[H]
+ 		\centering
+ 		\subfigure[模糊控制器结构] 
+ 		{\includegraphics[width=6cm]{mo1.jpg}}
+ 		\subfigure[输入量e的隶属度函数] 
+ 		{\includegraphics[width=6cm]{mo2.jpg}} \\
+ 		\subfigure[输入量ec的隶属度函数] 
+ 		{\includegraphics[width=6cm]{mo3.jpg}} 
+ 		\subfigure[输出量u的隶属度函数] 
+ 		{\includegraphics[width=6cm]{mo4.jpg}} 
+ 		\label{guiFig}
+ 	\end{figure}
+ 	此模糊控制器由输入量$e,ec$与输出量$u$组成，其隶属函数为$7$个，论域范围为$[-3,3]$,模糊规则有$49个$
+ 	\lstset{language=Matlab,numbers=left,frame=shadowbox,  
+ 		, breaklines=true,escapechar=@}
+ 	\subsection{Matlab代码}
+ 	\begin{lstlisting}
+ 	%Fuzzy Controller
+ 	clear all;
+ 	close all;
+ 	
+ 	a=newfis('fuzzf');
+ 	
+ 	f1=1;
+ 	a=addvar(a,'input','e',[-3*f1,3*f1]);            %Parameter e
+ 	a=addmf(a,'input',1,'NB','zmf',[-3*f1,-1*f1]);
+ 	a=addmf(a,'input',1,'NM','trimf',[-3*f1,-2*f1,0]);
+ 	a=addmf(a,'input',1,'NS','trimf',[-3*f1,-1*f1,1*f1]);
+ 	a=addmf(a,'input',1,'Z','trimf',[-2*f1,0,2*f1]);
+ 	a=addmf(a,'input',1,'PS','trimf',[-1*f1,1*f1,3*f1]);
+ 	a=addmf(a,'input',1,'PM','trimf',[0,2*f1,3*f1]);
+ 	a=addmf(a,'input',1,'PB','smf',[1*f1,3*f1]);
+ 	
+ 	f2=1;
+ 	a=addvar(a,'input','ec',[-3*f2,3*f2]);          %Parameter ec
+ 	a=addmf(a,'input',2,'NB','zmf',[-3*f2,-1*f2]);
+ 	a=addmf(a,'input',2,'NM','trimf',[-3*f2,-2*f2,0]);
+ 	a=addmf(a,'input',2,'NS','trimf',[-3*f2,-1*f2,1*f2]);
+ 	a=addmf(a,'input',2,'Z','trimf',[-2*f2,0,2*f2]);
+ 	a=addmf(a,'input',2,'PS','trimf',[-1*f2,1*f2,3*f2]);
+ 	a=addmf(a,'input',2,'PM','trimf',[0,2*f2,3*f2]);
+ 	a=addmf(a,'input',2,'PB','smf',[1*f2,3*f2]);
+ 	
+ 	f3=1.5;
+ 	a=addvar(a,'output','u',[-3*f3,3*f3]);          %Parameter u
+ 	a=addmf(a,'output',1,'NB','zmf',[-3*f3,-1*f3]);
+ 	a=addmf(a,'output',1,'NM','trimf',[-3*f3,-2*f3,0]);
+ 	a=addmf(a,'output',1,'NS','trimf',[-3*f3,-1*f3,1*f3]);
+ 	a=addmf(a,'output',1,'Z','trimf',[-2*f3,0,2*f3]);
+ 	a=addmf(a,'output',1,'PS','trimf',[-1*f3,1*f3,3*f3]);
+ 	a=addmf(a,'output',1,'PM','trimf',[0,2*f3,3*f3]);
+ 	a=addmf(a,'output',1,'PB','smf',[1*f3,3*f3]);
+ 	
+ 	rulelist=[1 1 1 1 1;         %Edit rule base
+ 	1 2 1 1 1;
+ 	1 3 2 1 1;
+ 	1 4 2 1 1;
+ 	1 5 3 1 1;
+ 	1 6 3 1 1;
+ 	1 7 4 1 1;
+ 	
+ 	2 1 1 1 1;
+ 	2 2 2 1 1;
+ 	2 3 2 1 1;
+ 	2 4 3 1 1;
+ 	2 5 3 1 1;
+ 	2 6 4 1 1;
+ 	2 7 5 1 1;
+ 	
+ 	3 1 2 1 1;
+ 	3 2 2 1 1;
+ 	3 3 3 1 1;
+ 	3 4 3 1 1;
+ 	3 5 4 1 1;
+ 	3 6 5 1 1;
+ 	3 7 5 1 1;
+ 	
+ 	4 1 2 1 1;
+ 	4 2 3 1 1;
+ 	4 3 3 1 1;
+ 	4 4 4 1 1;
+ 	4 5 5 1 1;
+ 	4 6 5 1 1;
+ 	4 7 6 1 1;
+ 	
+ 	5 1 3 1 1;
+ 	5 2 3 1 1;
+ 	5 3 4 1 1;
+ 	5 4 5 1 1;
+ 	5 5 5 1 1;
+ 	5 6 6 1 1;
+ 	5 7 6 1 1;
+ 	
+ 	6 1 3 1 1;
+ 	6 2 4 1 1;
+ 	6 3 5 1 1;
+ 	6 4 5 1 1;
+ 	6 5 6 1 1;
+ 	6 6 6 1 1;
+ 	6 7 7 1 1;
+ 	
+ 	7 1 4 1 1;
+ 	7 2 5 1 1;
+ 	7 3 5 1 1;
+ 	7 4 6 1 1;
+ 	7 5 6 1 1;
+ 	7 6 7 1 1;
+ 	7 7 7 1 1];
+ 	
+ 	a=addrule(a,rulelist);
+ 	%showrule(a)                        % Show fuzzy rule base
+ 	
+ 	a1=setfis(a,'DefuzzMethod','mom');  % Defuzzy
+ 	writefis(a1,'fuzzf');               % save to fuzzy file "fuzzf.fis" which can be
+ 	% simulated with fuzzy tool
+ 	a2=readfis('fuzzf');
+ 	
+ 	disp('fuzzy controller table:e=[-3,+3],ec=[-3,+3]');
+ 	Ulist=zeros(7,7);
+ 	
+ 	for i=1:7
+ 	for j=1:7
+ 	e(i)=-4+i;
+ 	ec(j)=-4+j;
+ 	Ulist(i,j)=evalfis([e(i),ec(j)],a2);
+ 	end
+ 	end
+ 	
+ 	Ulist=ceil(Ulist)
+ 	
+ 	figure(1);
+ 	plotfis(a2);
+ 	figure(2);
+ 	plotmf(a,'input',1);
+ 	figure(3);
+ 	plotmf(a,'input',2);
+ 	figure(4);
+ 	plotmf(a,'output',1);
+ 	\end{lstlisting}
+ 	\section{统计学作业= =}
  	\section{基于Matlab的混沌系统仿真与分析}
  	 \subsection{问题重述}
  	 \noindent
