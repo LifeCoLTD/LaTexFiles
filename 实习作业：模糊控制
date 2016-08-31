@@ -10,7 +10,7 @@
 \usepackage{flafter} 
 \usepackage[a4paper,left=3cm,right=3cm]{geometry}
 \title{\heiti 模糊控制及其应用}
-\author{\kaishu 王浩同}
+\author{\kaishu 报告小组成员：王浩同、苑婉秋、仝树、吕元玮、张九斤}
 \date{\today}
 \begin{document}
 	\maketitle
@@ -64,7 +64,10 @@
 	(5)表面查看器 \par	
 	该查看器用于显示输入、输出量对应的表面空间，并可改变各轴对应的变量及观察的视角，便于用户对设计的模糊推理系统进行修改和优化。\par
 	在命令行输入$fuzzy$，可直接创建一个新的模糊推理系统编辑器。
-	\section{简单仿真程序运行结果}
+	\subsection{Matlab仿真程序说明}
+	该程序(matlab)为模糊控制的初学者了解模糊控制中隶属度函数以及对于获取模糊控制表提供了很好的一个典范，而整个程序的功能就是起到模糊控制器的作用。关于模糊控制(fuzzy control)器，首先要结局的问题是，把确定的量的转换成相应的模糊量(见程序中的隶属度函数建立过程)，其次是形成模糊控制规则库(见程序的49条规则)，最后就是实现模糊输出量的接模糊判决，程序即通过获取模糊控制表的方法，实现解模糊判决及实现模糊化输出量。具体解释就是，在涉及模糊控制器(这里及matlab程序功能)之前，先设立偏差值$e$，$e$为具体的量(或数值)，$e$经过隶属度函数的作用，输出即为模糊的量，这样被控对象(及模糊获取列表)在模糊控制器的作用后会被反馈到与最初始的偏差比较，完成模糊量到数字量的解模糊华过程。
+	
+	\subsection{程序运行结果}
 	\begin{figure}[H]
 		\centering
 		\subfigure[模糊控制器结构] 
@@ -80,15 +83,16 @@
 	此模糊控制器由输入量$e,ec$与输出量$u$组成，其隶属函数为$7$个，论域范围为$[-3,3]$,模糊规则有$49个$
 \lstset{language=Matlab,numbers=left,frame=shadowbox,  
 	, breaklines=true,escapechar=@}
-\section{Matlab代码}
+\subsection{Matlab代码}
 \begin{lstlisting}
 %Fuzzy Controller
+%@常规模糊控制程序@
 clear all;
 close all;
 
 a=newfis('fuzzf');
 
-f1=1;
+f1=1;    %@建立模糊输入误差e的隶属度函数@
 a=addvar(a,'input','e',[-3*f1,3*f1]);            %Parameter e
 a=addmf(a,'input',1,'NB','zmf',[-3*f1,-1*f1]);
 a=addmf(a,'input',1,'NM','trimf',[-3*f1,-2*f1,0]);
@@ -98,7 +102,7 @@ a=addmf(a,'input',1,'PS','trimf',[-1*f1,1*f1,3*f1]);
 a=addmf(a,'input',1,'PM','trimf',[0,2*f1,3*f1]);
 a=addmf(a,'input',1,'PB','smf',[1*f1,3*f1]);
 
-f2=1;
+f2=1;     %@建立模糊输入误差ec的隶属度函数@
 a=addvar(a,'input','ec',[-3*f2,3*f2]);          %Parameter ec
 a=addmf(a,'input',2,'NB','zmf',[-3*f2,-1*f2]);
 a=addmf(a,'input',2,'NM','trimf',[-3*f2,-2*f2,0]);
@@ -108,7 +112,7 @@ a=addmf(a,'input',2,'PS','trimf',[-1*f2,1*f2,3*f2]);
 a=addmf(a,'input',2,'PM','trimf',[0,2*f2,3*f2]);
 a=addmf(a,'input',2,'PB','smf',[1*f2,3*f2]);
 
-f3=1.5;
+f3=1.5;     %@建立模糊输出u的隶属度函数@
 a=addvar(a,'output','u',[-3*f3,3*f3]);          %Parameter u
 a=addmf(a,'output',1,'NB','zmf',[-3*f3,-1*f3]);
 a=addmf(a,'output',1,'NM','trimf',[-3*f3,-2*f3,0]);
@@ -118,7 +122,7 @@ a=addmf(a,'output',1,'PS','trimf',[-1*f3,1*f3,3*f3]);
 a=addmf(a,'output',1,'PM','trimf',[0,2*f3,3*f3]);
 a=addmf(a,'output',1,'PB','smf',[1*f3,3*f3]);
 
-rulelist=[1 1 1 1 1;         %Edit rule base
+rulelist=[1 1 1 1 1;         %Edit rule base @建立模糊规则库，共49条规则@
 1 2 1 1 1;
 1 3 2 1 1;
 1 4 2 1 1;
@@ -174,12 +178,12 @@ rulelist=[1 1 1 1 1;         %Edit rule base
 7 6 7 1 1;
 7 7 7 1 1];
 
-a=addrule(a,rulelist);
+a=addrule(a,rulelist);   @设置反模糊化函数@
 %showrule(a)                        % Show fuzzy rule base
 
 a1=setfis(a,'DefuzzMethod','mom');  % Defuzzy
 writefis(a1,'fuzzf');               % save to fuzzy file "fuzzf.fis" which can be
-% simulated with fuzzy tool
+% simulated with fuzzy tool   
 a2=readfis('fuzzf');
 
 disp('fuzzy controller table:e=[-3,+3],ec=[-3,+3]');
@@ -203,6 +207,7 @@ figure(3);
 plotmf(a,'input',2);
 figure(4);
 plotmf(a,'output',1);
+
 \end{lstlisting}
 
 
