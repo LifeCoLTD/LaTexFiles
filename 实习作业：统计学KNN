@@ -1,0 +1,70 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage[a4paper,left=3cm,right=3cm]{geometry}
+\title{\heiti 基于KNN思想，使用局部线性回归估计函数关系}
+\author{\kaishu 王浩同}
+\date{\today}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\newpage
+	\setlength{\parindent}{2em}
+	\section{KNN与局部线性回归}
+	KNN(K Nearest Neighbor)的核心思想是在某一个预测值旁选取$k$个最邻近的点（使用欧式距离来衡量），使用它们的平均值或者是加权平均值作为此预测值。而如果我们想得到某些观测点的一个光滑的估计，那么我们可以使用一个光滑的权重的函数，成为核函数（Kernel Function），本题中采用的是高斯核函数
+	\[
+	K(u)=\frac{1}{\sqrt{2\pi}}exp(-\frac{u^2}{2})
+	\]
+	上式就是著名的高斯核函数，它可以用来做一个权重函数，因为距离$x$越近的点$K$越大，反之越小。核函数$K$决定影响的形状，故在$K$限定的形状内会有若干个点会对$x$估计有影响，符合了KNN的核心思想。但不足的是，局部线性回归每个预测点处对实例$x$有影响的观测点可能不固定。
+	\section{程序运行结果}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{knn.jpg}
+		\caption{x-y}
+	\end{figure}
+	图中离散的点为原始数据，波动的曲线为估计的函数。
+	\lstset{language=Matlab,numbers=left,frame=shadowbox,  
+		, breaklines=true,escapechar=@}
+	\section{Matlab代码}
+	\begin{lstlisting}
+% @局部加权线性回归算法@(LWR/LOESS)  
+clc;  
+clear all;
+close all;  
+%@载入数据@   
+load('data.mat');  
+x=data(:,1:2);  
+y=data(:,3);  
+%%  
+m=size(x,1);%@样本数@  
+n=size(x,2);%@特征维数@  
+k=0.005;  
+w=zeros(m,m);  
+theta=zeros(n,m);  
+for i=1:m  
+for j=1:m  
+w(j,j)=exp(-((x(i,2)-x(j,2))^2)/(2*k^2));  
+end  
+theta(:,i)=((x'*w*x)\x')*w*y;  
+end  
+figure;  
+plot(x(:,2),y,'r.');%@原始数据@  
+hold on;  
+y_fit=x*theta;  
+y=diag(y_fit);  
+data(:,1:2)=x;  
+data(:,3)=y;  
+data=sortrows(data,2);  
+x=data(:,1:2);  
+y=data(:,3);  
+plot(x(:,2),y);    
+	\end{lstlisting}
+	
+	
+\end{document}
